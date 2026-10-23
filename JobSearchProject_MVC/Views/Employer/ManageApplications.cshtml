@@ -1,0 +1,60 @@
+﻿
+
+@model IEnumerable<JobSearchProject_MVC.Models.ManageApplications>
+
+@{
+    ViewBag.Title = "Manage Applications";
+    Layout = "~/Views/Shared/_EmployerLayout.cshtml";
+}
+
+<div class="manage-applications-page">
+    <div class="applications-heading">
+        <h2>Manage Applications</h2>
+        <p>Review applications received for your job openings.</p>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="applications-table-wrapper">
+            <table class="applications-table">
+                <thead>
+                    <tr>
+                        <th>Applicant</th>
+                        <th>Job Title</th>
+                        <th>Applied Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.applicant_name</td>
+                            <td>@item.job_title</td>
+                            <td>
+                                @(item.applied_date.HasValue ? item.applied_date.Value.ToString("dd MMM yyyy") : "-")
+                            </td>
+                            <td>
+                                <span class="application-status">
+                                    @item.application_status
+                                </span>
+                            </td>
+                            <td>
+                                @Html.ActionLink("View Details","ApplicationDetails", new { id = item.application_id }, new { @class = "application-action" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="no-applications">
+            <h3>No applications yet</h3>
+            <p>Applications for your posted jobs will appear here.</p>
+        </div>
+    }
+</div>

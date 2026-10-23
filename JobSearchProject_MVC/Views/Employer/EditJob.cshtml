@@ -1,0 +1,83 @@
+﻿
+@model JobSearchProject_MVC.Models.ManageJobs
+
+@{
+    ViewBag.Title = "Edit Job";
+    Layout = "~/Views/Shared/_EmployerLayout.cshtml";
+}
+
+<div class="manage-jobs-page">
+    <div class="manage-jobs-header">
+        <div>
+            <h2>Edit Job</h2>
+            <p>Update the details of your job posting.</p>
+        </div>
+
+        <a href="@Url.Action("ManageJobs", "Employer")"
+           class="manage-jobs-add-btn">
+            Back to Manage Jobs
+        </a>
+    </div>
+
+    <div class="edit-job-card">
+        @using (Html.BeginForm("EditJob_click", "Employer", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.job_id)
+
+            <div class="edit-job-form">
+                <div class="edit-job-field">
+                    @Html.LabelFor(m => m.title, "Job Title")
+                    @Html.TextBoxFor(m => m.title, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="edit-job-field">
+                    @Html.LabelFor(m => m.location, "Location")
+                    @Html.TextBoxFor(m => m.location, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="edit-job-field">
+                    @Html.LabelFor(m => m.experience, "Experience")
+                    @Html.TextBoxFor(m => m.experience, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="edit-job-field">
+                    @Html.LabelFor(m => m.job_type, "Job Type")
+                    @Html.TextBoxFor(m => m.job_type, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="edit-job-field">
+                    @Html.LabelFor(m => m.salary, "Salary")
+                    @Html.TextBoxFor(m => m.salary, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="edit-job-field">
+                    @Html.LabelFor(m => m.job_status, "Job Status")
+
+                    @Html.DropDownListFor(m => m.job_status,
+                        new SelectList(new[]
+                        {
+                            "Active",
+                            "On Hold",
+                            "Closed"
+                        }, Model.job_status),"-- Select Status --",new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="edit-job-field edit-job-full-width">
+                    @Html.LabelFor(m => m.skills, "Required Skills")
+                    @Html.TextAreaFor(m => m.skills, new { @class = "form-control", rows = "3", required = "required" })
+                </div>
+
+                <div class="edit-job-field edit-job-full-width">
+                    @Html.LabelFor(m => m.description, "Job Description")
+                    @Html.TextAreaFor(m => m.description, new { @class = "form-control", rows = "5", required = "required" })
+                </div>
+            </div>
+
+            <button type="submit" class="manage-jobs-add-btn">
+                Save Changes
+            </button>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewBag.Title - Job Finder</title>
+
+    <link href="@Url.Content("~/Content/Auth.css")" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+    <!-- ==============================
+         NAVBAR
+    =============================== -->
+
+    <header class="navbar">
+
+        <div class="nav-inner">
+
+            <!-- LOGO -->
+
+            <div class="logo" aria-label="Job Finder">
+
+                <span>JOB</span>
+                <span>FINDER</span>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="nav-links">
+
+                <a href="@Url.Action("JobSeeker_pageload", "JobSeeker")">
+                    Find Jobs
+                </a>
+
+                <a href="#">
+                    About Us
+                </a>
+
+            </nav>
+            </div>
+
+    </header>
+
+
+    <!-- ==============================
+         PAGE CONTENT
+    =============================== -->
+
+    @RenderBody()
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

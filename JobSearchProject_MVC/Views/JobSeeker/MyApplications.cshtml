@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "MyApplications";
+    Layout = "~/Views/Shared/_JobSeekerLayout.cshtml";
+}
+
+
+<div class="applications-page">
+    <h2>My Applications</h2>
+    <p>View your applied jobs and application status here.</p>
+
+    @{
+        var applications = ViewBag.myApplications;
+    }
+
+    @if (applications != null && applications.Count > 0)
+    {
+        <table class="applications-table">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Applied Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in applications)
+                {
+                    <tr>
+                        <td>@item.JobTitle</td>
+                        <td>@item.CompanyName</td>
+                        <td>@item.applied_date.ToString("dd-MM-yyyy")</td>
+                        <td>
+                            <span class="application-status status-@item.application_status.ToLower()">
+                                @item.application_status
+                            </span>
+                        </td>
+                        <td>
+                            @if (item.application_status == "Pending")
+                            {
+                                using (Html.BeginForm("CancelApplication", "JobSeeker", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="application_id" value="@item.application_id" />
+
+                                    <button type="submit" class="cancel-button" onclick="return confirm('Are you sure you want to cancel this application?');">
+                                        Cancel
+                                    </button>
+                                }
+                            }
+                            else
+                            {
+                                <span>-</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You have not applied for any jobs yet.</p>
+        <a href="@Url.Action("JobSeeker_pageload", "JobSeeker")" class="btn btn-primary">
+            Browse Jobs
+        </a>
+    }
+</div>

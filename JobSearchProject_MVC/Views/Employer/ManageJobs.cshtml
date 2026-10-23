@@ -1,0 +1,93 @@
+﻿
+@model IEnumerable<JobSearchProject_MVC.Models.ManageJobs>
+
+@{
+    ViewBag.Title = "ManageJobs";
+    Layout = "~/Views/Shared/_EmployerLayout.cshtml";
+}
+
+
+<div class="manage-jobs-page">
+    <div class="manage-jobs-header">
+        <div>
+            <h2>Manage Jobs</h2>
+            <p>View and manage the jobs you have posted.</p>
+        </div>
+
+        <a href="@Url.Action("postjob_pageload", "postjob")"
+           class="manage-jobs-add-btn">
+            + Post New Job
+        </a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="manage-jobs-table-wrapper">
+            <table class="manage-jobs-table">
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Location</th>
+                        <th>Experience</th>
+                        <th>Job Type</th>
+                        <th>Salary</th>
+                        <th>Status</th>
+                        <th>Posted Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var job in Model)
+                    {
+                        <tr>
+                            <td>@job.title</td>
+                            <td>@job.location</td>
+                            <td>@job.experience</td>
+                            <td>@job.job_type</td>
+                            <td>@job.salary</td>
+                            <td>
+                                <span class="job-status">
+                                    @job.job_status
+                                </span>
+                            </td>
+                            <td>
+                                @(job.created_date.HasValue
+                                    ? job.created_date.Value.ToString("dd MMM yyyy")
+                                    : "-")
+                            </td>
+                            <td class="manage-jobs-actions">
+                                <a href="@Url.Action("EditJob", "Employer",new { id = job.job_id })"class="job-edit-btn">
+                                    Edit
+                                </a>
+
+                                @using (Html.BeginForm("DeleteJob", "Employer", new { id = job.job_id },FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <button type="submit"
+                                            class="job-delete-btn"
+                                            onclick="return confirm('Are you sure you want to delete this job?');">
+                                        Delete
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="manage-jobs-empty">
+            <h3>No jobs posted yet</h3>
+            <p>Your posted jobs will appear here.</p>
+
+            <a href="@Url.Action("postjob_pageload", "postjob")"
+               class="manage-jobs-add-btn">
+                Post Your First Job
+            </a>
+        </div>
+    }
+</div>

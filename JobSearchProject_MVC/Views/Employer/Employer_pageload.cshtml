@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Employer_pageload";
+    Layout = "~/Views/Shared/_EmployerLayout.cshtml";
+}
+
+
+<div class="employer-dashboard">
+
+    <div class="dashboard-heading">
+        <h2>Welcome back, @ViewBag.CompanyName!</h2>
+        <p>Here's an overview of your job postings and applications.</p>
+    </div>
+
+    <div class="dashboard-stats">
+
+        <div class="stat-card">
+            <h3>@ViewBag.TotalJobsPosted</h3>
+            <p>Total Jobs Posted</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>@ViewBag.TotalApplications</h3>
+            <p>Total Applications</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>@ViewBag.ActiveJobs</h3>
+            <p>Active Jobs</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>@ViewBag.JobsOnHold</h3>
+            <p>Jobs on Hold</p>
+        </div>
+
+    </div>
+
+    <div class="dashboard-panel">
+        <h3>Recent Job Postings</h3>
+
+        <div class="table-responsive">
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Location</th>
+                        <th>Experience</th>
+                        <th>Status</th>
+                        <th>Posted On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var job in ViewBag.RecentJobs)
+                    {
+                        <tr>
+                            <td>@job.title</td>
+                            <td>@job.location</td>
+                            <td>@job.experience</td>
+                            <td>
+                                @if (job.job_status == "Active")
+                                {
+                                    <span class="status-active">@job.job_status</span>
+                                }
+                                else
+                                {
+                                    <span class="status-hold">@job.job_status</span>
+                                }
+                            </td>
+                            <td>@job.created_date.ToString("dd MMM yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="dashboard-panel">
+        <h3>Recent Applications</h3>
+
+        <div class="table-responsive">
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Candidate</th>
+                        <th>Job Title</th>
+                        <th>Applied On</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var application in ViewBag.RecentApplications)
+                    {
+                        <tr>
+                            <td>@application.applicant_name</td>
+                            <td>@application.title</td>
+                            <td>@application.applied_date.ToString("dd MMM yyyy")</td>
+                            <td>
+                                <span class="status-pending">@application.application_status</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

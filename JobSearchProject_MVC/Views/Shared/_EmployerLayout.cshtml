@@ -1,0 +1,68 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - Job Finder</title>
+    <link href="@Url.Content("~/Content/Auth.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Employer.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-inner">
+            <div class="logo" aria-label="Job Finder">
+                <span>JOB</span>
+                <span>FINDER</span>
+            </div>
+            <nav class="nav-links">
+                <a href="@Url.Action("Index", "Employer")">Find Talent</a>
+                <a href="@Url.Action("postjob_pageload", "postjob")">Post Job</a>
+                <a href="#">About Us</a>
+            </nav>
+            <div class="nav-actions">
+                @*<div class="notification" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+                        <path d="M10 21h4" />
+                    </svg>
+                </div>*@
+                @*<div class="profile" aria-label="Profile">👤</div>*@
+            </div>
+        </div>
+    </header>
+
+    <div class="employer-shell">
+        <aside class="employer-sidebar">
+            @*<div class="employer-brand">
+                <div class="employer-avatar">🏢</div>
+                <div>
+                    <strong>Employer</strong>
+                    <span>Company Account</span>
+                </div>
+            </div>*@
+
+            <nav class="employer-menu">
+                <a href="@Url.Action("Employer_pageload", "Employer")">Dashboard</a>
+                <a href="@Url.Action("postjob_pageload", "postjob")">Post Job</a>
+                <a href="@Url.Action("ManageJobs", "Employer")">Manage Jobs</a>
+                <a href="@Url.Action("ManageApplications", "Employer")">Applications</a>
+                <a href="@Url.Action("Profile", "Employer")">Profile</a>
+                <a href="@Url.Action("ChangePassword", "Employer")">Change Password</a>
+                <a href="@Url.Action("Logout", "Employer")">Logout</a>
+            </nav>
+        </aside>
+
+        <main class="employer-main">
+            @RenderBody()
+        </main>
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

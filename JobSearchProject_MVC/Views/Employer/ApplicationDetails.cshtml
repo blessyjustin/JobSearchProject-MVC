@@ -1,0 +1,139 @@
+﻿
+@model JobSearchProject_MVC.Models.ManageApplications
+
+@{
+    ViewBag.Title = "Application Details";
+    Layout = "~/Views/Shared/_EmployerLayout.cshtml";
+}
+
+<div class="manage-applications-page">
+    <div class="applications-heading">
+        <h2>Application Details</h2>
+        <p>Review the complete information submitted by the applicant.</p>
+    </div>
+
+    <div class="application-details-card">
+
+        <h3>Application Information</h3>
+
+        <div class="details-row">
+            <span>Job Title</span>
+            <strong>@Model.job_title</strong>
+        </div>
+
+        <div class="details-row">
+            <span>Application Date</span>
+            <strong>
+                @Model.applied_date
+            </strong>
+        </div>
+
+
+        <div class="details-row">
+            <span>Current Status</span>
+            <strong>@Model.application_status</strong>
+        </div>
+
+        <br /><br />
+
+        <h3>Personal Details</h3>
+
+        <div class="details-row">
+            <span>Full Name</span>
+            <strong>@Model.applicant_name</strong>
+        </div>
+
+        <div class="details-row">
+            <span>Email</span>
+            <strong>@Model.applicant_email</strong>
+        </div>
+
+        <div class="details-row">
+            <span>Phone</span>
+            <strong>@Model.applicant_phone</strong>
+        </div>
+
+        <div class="details-row">
+            <span>Gender</span>
+            <strong>@Model.applicant_gender</strong>
+        </div>
+
+        <div class="details-row">
+            <span>Address</span>
+            <strong>@Model.applicant_address</strong>
+        </div>
+        <br /><br />
+
+        <h3>Education</h3>
+
+        <div class="details-row">
+            <span>Qualification</span>
+            <strong>@Model.applicant_qualification</strong>
+        </div>
+
+        <div class="details-row">
+            <span>Specialization</span>
+            <strong>@Model.applicant_specialization</strong>
+        </div>
+
+        <div class="details-row">
+            <span>Passing Year</span>
+            <strong>@Model.applicant_passing_year</strong>
+        </div>
+        <br /><br />
+
+        <h3>Professional Details</h3>
+
+        <div class="details-row">
+            <span>Experience</span>
+            <strong>@Model.applicant_experience</strong>
+        </div>
+
+        <div class="details-row">
+            <span>Skills</span>
+            <strong>@Model.applicant_skills</strong>
+        </div>
+        <br /><br />
+        <h3>Resume</h3>
+
+        <div class="details-row">
+            <span>Uploaded Resume</span>
+            <strong>
+                @if (!String.IsNullOrWhiteSpace(Model.application_resume))
+                {
+                    @Html.ActionLink( "View Resume", "ViewResume",new { id = Model.application_id },new { @class = "application-action" , target = "_blank" })
+                }
+                else
+                {
+                    <text>Resume not available</text>
+                }
+            </strong>
+        </div>
+        <div class="application-status-form">
+            <h3>Update Application Status</h3>
+
+            @using (Html.BeginForm("UpdateApplicationStatus", "Employer", new { id = Model.application_id }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <label for="application_status">Select Status</label>
+
+                <select id="application_status" name="application_status" class="form-control">
+                    <option value="Pending">Pending</option>
+                    <option value="Shortlisted">Shortlisted</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Selected">Selected</option>
+                </select>
+
+                <button type="submit" class="update-status-btn">
+                    Update Status
+                </button>
+            }
+        </div>
+
+            <div class="details-actions">
+                @Html.ActionLink("Back to Applications", "ManageApplications", "Employer", null, new { @class = "application-action" })
+            </div>
+
+        </div>
+    </div>

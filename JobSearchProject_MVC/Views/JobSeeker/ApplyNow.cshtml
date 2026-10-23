@@ -1,0 +1,167 @@
+﻿
+@model JobSearchProject_MVC.Models.application
+
+@{
+    ViewBag.Title = "Apply for Job";
+    Layout = "~/Views/Shared/_JobSeekerLayout.cshtml";
+    var job = ViewBag.Job;
+    var seeker = ViewBag.JobSeeker;
+}
+
+<link href="~/Content/Auth.css" rel="stylesheet" />
+
+<div class="application-page">
+
+    <h2>Apply for Job</h2>
+    <p>Review your details and complete your application.</p>
+
+    @if (!string.IsNullOrEmpty(Model.msg))
+    {
+        <p class="password-message">@Model.msg</p>
+    }
+
+    <div class="application-card">
+
+        @if (job != null)
+        {
+            <div class="application-job-details">
+                <h4>@job.title</h4>
+                <p><strong>Location:</strong> @job.location</p>
+                <p><strong>Experience:</strong> @job.experience</p>
+                <p><strong>Skills:</strong> @job.skills</p>
+            </div>
+        }
+
+        @using (Html.BeginForm(
+            "SubmitApplication",
+            "JobSeeker",
+            FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.JobId)
+
+            <h3>Personal Details</h3>
+
+            <div class="application-fields">
+
+                <div class="application-field">
+                    @Html.LabelFor(m => m.Name, "Full Name")
+                    @Html.TextBoxFor(m => m.Name,
+                        new { required = "required" })
+                </div>
+
+                <div class="application-field">
+                    @Html.LabelFor(m => m.Email, "Email")
+                    @Html.TextBoxFor(m => m.Email,
+                        new { type = "email", required = "required" })
+                </div>
+
+                <div class="application-field">
+                    @Html.LabelFor(m => m.Phone, "Phone")
+                    @Html.TextBoxFor(m => m.Phone,
+                        new { required = "required" })
+                </div>
+
+                <div class="application-field">
+                    @Html.LabelFor(m => m.Gender, "Gender")
+                    @Html.DropDownListFor(m => m.Gender,
+                        new SelectList(new[]
+                        {
+                            new SelectListItem { Text = "Select Gender", Value = "" },
+                            new SelectListItem { Text = "Female", Value = "Female" },
+                            new SelectListItem { Text = "Male", Value = "Male" },
+                            new SelectListItem { Text = "Other", Value = "Other" }
+                        }, "Value", "Text"),
+                        new { required = "required" })
+                </div>
+
+                <div class="application-field full-width">
+                    @Html.LabelFor(m => m.Address, "Address")
+                    @Html.TextAreaFor(m => m.Address,
+                        new { rows = "3", required = "required" })
+                </div>
+
+            </div>
+
+            <h3>Education Details</h3>
+
+            <div class="application-fields">
+
+                <div class="application-field">
+                    @Html.LabelFor(m => m.Qualification, "Qualification")
+                    @Html.TextBoxFor(m => m.Qualification,
+                        new { required = "required" })
+                </div>
+
+                <div class="application-field">
+                    @Html.LabelFor(m => m.Specialization, "Specialization")
+                    @Html.TextBoxFor(m => m.Specialization,
+                        new { required = "required" })
+                </div>
+
+                <div class="application-field">
+                    @Html.LabelFor(m => m.PassingYear, "Passing Year")
+                    @Html.TextBoxFor(m => m.PassingYear,
+                        new
+                        {
+                            type = "number",
+                            min = "1950",
+                            max = "2100",
+                            required = "required"
+                        })
+                </div>
+
+            </div>
+
+            <h3>Experience and Skills</h3>
+
+            <div class="application-fields">
+
+                <div class="application-field">
+                    @Html.LabelFor(m => m.Experience, "Experience")
+                    @Html.DropDownListFor(m => m.Experience,
+                        new SelectList(new[]
+                        {
+                            new SelectListItem { Text = "Select Experience", Value = "" },
+                            new SelectListItem { Text = "Fresher", Value = "Fresher" },
+                            new SelectListItem { Text = "Less than 1 year", Value = "Less than 1 year" },
+                            new SelectListItem { Text = "1-2 years", Value = "1-2 years" },
+                            new SelectListItem { Text = "2-5 years", Value = "2-5 years" },
+                            new SelectListItem { Text = "5+ years", Value = "5+ years" }
+                        }, "Value", "Text"),
+                        new { required = "required" })
+                </div>
+
+                <div class="application-field full-width">
+                    @Html.LabelFor(m => m.Skills, "Skills")
+                    @Html.TextAreaFor(m => m.Skills,
+                        new
+                        {
+                            rows = "3",
+                            placeholder = "Enter your skills",
+                            required = "required"
+                        })
+                </div>
+
+            </div>
+
+            <h3>Resume</h3>
+
+            <div class="application-fields">
+                <div class="application-field full-width">
+                    <label for="ResumeFile">Upload Resume</label>
+                    <input type="file"
+                           id="ResumeFile"
+                           name="ResumeFile"
+                           accept=".pdf,.doc,.docx" />
+                </div>
+            </div>
+
+            <button type="submit" class="application-submit">
+                Submit Application
+            </button>
+        }
+
+    </div>
+</div>

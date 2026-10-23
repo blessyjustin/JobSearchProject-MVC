@@ -1,0 +1,56 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - Job Finder</title>
+    <link href="@Url.Content("~/Content/Auth.css")" rel="stylesheet" />
+</head>
+<body>
+    <header class="jobseeker-navbar">
+        <a href="@Url.Action("JobSeeker_pageload", "JobSeeker")" class="jobseeker-logo">
+            JOB<br />FINDER
+        </a>
+        <div class="navbar-actions">
+            <a href="@Url.Action("Notifications", "JobSeeker")" class="notification-icon" title="Notifications">
+                <span class="bell-symbol">&#128276;</span>
+            </a>
+            <a href="@Url.Action("Profile", "JobSeeker")" class="profile-link" title="Profile">
+                <img src="@Url.Content("~/Content/Images/default-avatar.png")"
+                     alt="Profile" class="navbar-profile-pic"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                <span class="default-avatar-fallback">&#128100;</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="jobseeker-layout">
+        <aside class="jobseeker-sidebar">
+            <a href="@Url.Action("JobSeeker_pageload", "JobSeeker")" class="sidebar-link">
+                <span>&#128269;</span> Find Jobs
+            </a>
+            <a href="@Url.Action("MyApplications", "JobSeeker")" class="sidebar-link">
+                <span>&#128196;</span> My Applications
+            </a>
+            <a href="@Url.Action("ChangePassword", "JobSeeker")" class="sidebar-link">
+                <span>&#128274;</span> Change Password
+            </a>
+            <a href="@Url.Action("Logout", "JobSeeker")" class="sidebar-link logout-link">
+                <span>&#10132;</span> Logout
+            </a>
+        </aside>
+
+        <main class="jobseeker-main">
+            @RenderBody()
+        </main>
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_JobSeekerLayout.cshtml";
+    var profile = ViewBag.profile;
+}
+
+<div class="applications-page profile-page">
+    <h2>My Profile</h2>
+    <p>Manage your personal and professional information.</p>
+
+    @if (profile != null)
+    {
+        using (Html.BeginForm("Profile", "JobSeeker", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="profile-card">
+                <div class="profile-heading">
+                    <div class="profile-avatar">&#128100;</div>
+                    <div>
+                        <h3>@profile.Name</h3>
+                        <p>Job Seeker</p>
+                    </div>
+                </div>
+
+                <div class="profile-details">
+                    <div class="profile-field">
+                        <label>Full Name</label>
+                        <input type="text" name="Name" value="@profile.Name" maxlength="50" required />
+                    </div>
+
+                    <div class="profile-field">
+                        <label>Email Address</label>
+                        <input type="email" name="Email"  value="@profile.Email" maxlength="50" required />
+                    </div>
+
+                    <div class="profile-field">
+                        <label>Phone Number</label>
+                        <input type="tel" name="Phone" value="@profile.Phone" maxlength="50" required />
+                    </div>
+
+                    <div class="profile-field">
+                        <label>Location</label>
+                        <input type="text" name="Location" value="@profile.Location" maxlength="100" />
+                    </div>
+
+                    <div class="profile-field">
+                        <label>Qualification</label>
+                        <input type="text" name="Qualification" value="@profile.Qualification" maxlength="150" />
+                    </div>
+
+                    <div class="profile-field">
+                        <label>Skills</label>
+                        <input type="text" name="Skills" value="@profile.Skills" maxlength="300" />
+                    </div>
+
+                    <div class="profile-field profile-full-width">
+                        <label>Professional Summary</label>
+                        <textarea name="ProfessionalSummary" maxlength="500" rows="4">@profile.ProfessionalSummary</textarea>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="profile-edit-button">
+                    Save Changes
+                </button>
+            </div>
+        }
+    }
+    else
+    {
+        <p>Profile information could not be found.</p>
+    }
+</div>
+

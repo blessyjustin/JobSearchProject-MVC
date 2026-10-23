@@ -1,0 +1,335 @@
+﻿@model JobSearchProject_MVC.Models.RegistrationViewModel
+
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<main class="registration-page">
+
+    <div class="registration-card">
+
+        <div class="registration-header">
+
+            <h1>Create your account</h1>
+
+            <p>
+                Join Job Finder and find your next opportunity.
+            </p>
+
+        </div>
+
+        <p class="account-type-label">
+            I want to
+        </p>
+
+        <div class="account-type-options">
+
+            <button type="button" class="account-type active" id="jobSeekerBtn" onclick="showJobSeeker()">
+
+                <div class="account-icon">
+                    👤
+                </div>
+
+                <div>
+                    <strong>Find a Job</strong>
+
+                    <span>
+                        I'm looking for job opportunities
+                    </span>
+                </div>
+
+            </button>
+
+
+            <button type="button" class="account-type" id="employerBtn" onclick="showEmployer()">
+
+                <div class="account-icon">
+                    🏢
+                </div>
+
+                <div>
+                    <strong>Hire Talent</strong>
+
+                    <span>
+                        I'm looking for talented people
+                    </span>
+                </div>
+
+            </button>
+
+        </div>
+
+      
+
+        <div id="jobSeekerForm" class="registration-form-area">
+
+            @using (Html.BeginForm("jobseekerReg_click", "jobseekerReg", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <h2>Job Seeker Registration</h2>
+
+                <p class="form-description">
+                    Create your profile and start exploring opportunities.
+                </p>
+
+                <div class="form-group">
+                    <label>Name</label>
+                    @Html.TextBoxFor(m => m.JobSeeker.name, new
+                    {
+                        @class = "form-input",
+                        placeholder = "Enter your name"
+                    })
+                    @Html.ValidationMessageFor(m => m.JobSeeker.name, "",
+                        new { @class = "validation-error" }
+                    )
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        @Html.TextBoxFor(m => m.JobSeeker.email, new
+                        {
+                            @class = "form-input",
+                            placeholder = "Enter your email"
+                        })
+
+                        @Html.ValidationMessageFor(m => m.JobSeeker.email, "",
+                            new { @class = "validation-error" }
+                        )
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        @Html.TextBoxFor(m => m.JobSeeker.phone, new
+                        {
+                            @class = "form-input",
+                            placeholder = "Enter your phone number"
+                        })
+
+                        @Html.ValidationMessageFor(m => m.JobSeeker.phone, "",
+                            new { @class = "validation-error" }
+                        )
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Resume</label>
+                    <input type="file" name="file" class="form-input file-input" />
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    @Html.TextBoxFor(m => m.JobSeeker.username, new
+                    {
+                        @class = "form-input",
+                        placeholder = "Choose a username"
+                    })
+                    @Html.ValidationMessageFor(m => m.JobSeeker.username, "",
+                        new { @class = "validation-error" }
+                    )
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Password</label>
+                        @Html.PasswordFor(m => m.JobSeeker.password, new
+                        {
+                            @class = "form-input",
+                            placeholder = "Create a password"
+                        })
+                        @Html.ValidationMessageFor(m => m.JobSeeker.password, "",
+                            new { @class = "validation-error" }
+                        )
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        @Html.PasswordFor(m => m.JobSeeker.confirmpass, new
+                        {
+                            @class = "form-input",
+                            placeholder = "Confirm password"
+                        })
+
+                        @Html.ValidationMessageFor(m => m.JobSeeker.confirmpass, "",
+                            new { @class = "validation-error" }
+                        )
+                    </div>
+                </div>
+
+                <button type="submit" class="register-button">
+                    Register
+                </button>
+                <div class="success-message">
+                    @Html.DisplayFor(m => m.JobSeeker.usermsg)
+                </div>
+               
+                <p class="login-link">
+                    Already have an account?
+                    <a href="@Url.Action("login_pageload", "login")">
+                        Login here
+                    </a>
+                </p>
+            }
+        </div>
+
+        <div id="employerForm" class="registration-form-area" style="display: none;">
+
+            @using (Html.BeginForm("employerReg_click", "employerReg", FormMethod.Post))
+            {
+
+                <h2>Employer Registration</h2>
+
+                <p class="form-description">
+                    Create your company account and find talented people.
+                </p>
+
+                <div class="form-group">
+                    <label>Name</label>
+                    @Html.TextBoxFor(m => m.Employer.name, new
+                    {
+                        @class = "form-input",
+                        placeholder = "Enter your name"
+                    })
+
+                    @Html.ValidationMessageFor(
+                        m => m.Employer.name,
+                        "",
+                        new { @class = "validation-error" }
+                    )
+                </div>
+
+                <div class="form-group">
+                    <label>Company Name</label>
+                    @Html.TextBoxFor(m => m.Employer.companyname, new
+                    {
+                        @class = "form-input",
+                        placeholder = "Enter company name"
+                    })
+
+                    @Html.ValidationMessageFor(
+                        m => m.Employer.companyname,
+                        "",
+                        new { @class = "validation-error" }
+                    )
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        @Html.TextBoxFor(m => m.Employer.email, new
+                        {
+                            @class = "form-input",
+                            placeholder = "Enter your email"
+                        })
+
+                        @Html.ValidationMessageFor(
+                            m => m.Employer.email,
+                            "",
+                            new { @class = "validation-error" }
+                        )
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+                        @Html.TextBoxFor(m => m.Employer.phone, new
+                        {
+                            @class = "form-input",
+                            placeholder = "Enter your phone number"
+                        })
+
+                        @Html.ValidationMessageFor(
+                            m => m.Employer.phone,
+                            "",
+                            new { @class = "validation-error" }
+                        )
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Username</label>
+                    @Html.TextBoxFor(m => m.Employer.username, new
+                    {
+                        @class = "form-input",
+                        placeholder = "Choose a username"
+                    })
+
+                    @Html.ValidationMessageFor(
+                        m => m.Employer.username,
+                        "",
+                        new { @class = "validation-error" }
+                    )
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label>Password</label>
+
+                        @Html.PasswordFor(m => m.Employer.password, new
+                        {
+                            @class = "form-input",
+                            placeholder = "Create a password"
+                        })
+                        @Html.ValidationMessageFor(m => m.Employer.password, "",
+                            new { @class = "validation-error" }
+                        )
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        @Html.PasswordFor(m => m.Employer.confirmpass, new
+                        {
+                            @class = "form-input",
+                            placeholder = "Confirm password"
+                        })
+
+                        @Html.ValidationMessageFor(
+                            m => m.Employer.confirmpass,
+                            "",
+                            new { @class = "validation-error" }
+                        )
+                    </div>
+                </div>
+
+
+                <button type="submit" class="register-button">
+                    Register
+                </button>
+                <div class="success-message">
+                    @Html.DisplayFor(m => m.Employer.empmsg)
+                </div>
+                
+                <p class="login-link">
+                    Already have an account?
+                    <a href="@Url.Action("login_pageload", "login")">
+                        Login here
+                    </a>
+                </p>
+            }
+
+        </div>
+    </div>
+</main>
+
+
+<script>
+
+    function showJobSeeker() {
+
+        document.getElementById("jobSeekerForm").style.display = "block";
+
+        document.getElementById("employerForm").style.display = "none";
+
+        document.getElementById("jobSeekerBtn").classList.add("active");
+
+        document.getElementById("employerBtn").classList.remove("active");
+    }
+
+
+    function showEmployer() {
+
+        document.getElementById("jobSeekerForm").style.display = "none";
+
+        document.getElementById("employerForm").style.display = "block";
+
+        document.getElementById("employerBtn").classList.add("active");
+
+        document.getElementById("jobSeekerBtn").classList.remove("active");
+    }
+</script>
